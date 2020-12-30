@@ -1,4 +1,4 @@
-// const chalk = require('chalk')
+const chalk = require('chalk')
 const notes = require('./notes')
 const yargs = require('yargs')
 
@@ -36,8 +36,12 @@ yargs.command({
       type: 'string'
     }
   },
-  handler: function () {
+  handler: function (argv) {
     console.log('Removing the note')
+    const deletedNote = notes.removeNote(argv.title)
+
+    // ternary operation to show success/fail console log
+    console.log(deletedNote.length ? chalk.green.inverse('Note Removed') : chalk.red.inverse('No note found'))
   }
 })
 
