@@ -20,7 +20,7 @@ yargs.command({
       type: 'string'
     }
   },
-  handler: function (argv) {
+  handler: argv => {
     // console.log('Title: '+ argv.title + '\nBody: ' + argv.body)
     notes.addNote(argv.title, argv.body)
   }
@@ -36,10 +36,9 @@ yargs.command({
       type: 'string'
     }
   },
-  handler: function (argv) {
+  handler: argv => {
     console.log('Removing the note')
     const deletedNote = notes.removeNote(argv.title)
-
     // ternary operation to show success/fail console log
     console.log(deletedNote.length ? chalk.green.inverse('Note Removed') : chalk.red.inverse('No note found'))
   }
