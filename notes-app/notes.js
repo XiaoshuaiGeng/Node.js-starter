@@ -71,8 +71,22 @@ const loadNotes = () => {
   }
 }
 
+const listNotes = () => {
+  try {
+    const data = fs.readFileSync('notes.json')
+    const dataJSON = JSON.parse(data.toString())
+
+    dataJSON.forEach(element => {
+      console.log(element.title)
+    })
+  } catch (e) {
+    return []
+  }
+}
+
 module.exports = {
   getNotes: getNotes,
   addNote: addNote,
-  removeNote: removeNote
+  removeNote: removeNote,
+  listNotes: listNotes
 }

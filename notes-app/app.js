@@ -44,4 +44,13 @@ yargs.command({
   }
 })
 
+yargs.command({
+  command: 'listNotes',
+  describe: 'list all notes',
+  handler () {
+    console.log(chalk.cyan('Your notes: \n'))
+    console.log(notes.listNotes())
+  }
+})
+
 yargs.parse()
