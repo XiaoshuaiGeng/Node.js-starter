@@ -11,9 +11,13 @@ const getNotes = () => {
  */
 const addNote = (title, body) => {
   const notes = loadNotes()
+
   const duplicateNotes = notes.filter((note) => {
     return note.title === title
   })
+
+  // alternative ways of checking duplicateNotes
+  // const duplicateNotes = notes.find((note) => note.title === title)
 
   if (duplicateNotes.length === 0) {
     notes.push({
@@ -71,6 +75,9 @@ const loadNotes = () => {
   }
 }
 
+/**
+ * list notes from file
+ */
 const listNotes = () => {
   try {
     const data = fs.readFileSync('notes.json')

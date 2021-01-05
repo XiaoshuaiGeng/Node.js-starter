@@ -48,8 +48,8 @@ yargs.command({
   command: 'listNotes',
   describe: 'list all notes',
   handler () {
-    console.log(chalk.cyan('Your notes: \n'))
-    console.log(notes.listNotes())
+    console.log(chalk.white.inverse('Your notes: '))
+    notes.listNotes()
   }
 })
 
