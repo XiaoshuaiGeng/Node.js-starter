@@ -7,23 +7,19 @@ if (!address){
     console.log('Please provide an address')
 }else {
     console.log(process.argv)
-    geocode(address, (error, data) => {
+    geocode(address, (error, {latitude, longitude, location} = {}) => {
         // console.log('Error', error)
         // console.log('Data', data)
         if (error) {
             return console.log(error)
         }
-        forecast(data.latitude, data.longitude, (error, forecastData) => {
+        forecast(latitude, longitude, (error, forecastData) => {
             if (error) {
                 return console.log(error)
             } else {
-                console.log(data.location)
+                console.log(location)
                 console.log(forecastData)
             }
         })
     })
 }
-// forecast( 44.1545, -75.7088, (error, data) => {
-//     console.log('Error', error)
-//     console.log('Data', data)
-// })
