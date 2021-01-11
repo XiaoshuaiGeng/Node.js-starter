@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
-const geocode = require('../../weather-app/utils/geocode')
-const forecast = require('../../weather-app/utils/forecast')
+const geocode = require('../utils/geocode')
+const forecast = require('../utils/forecast')
 const hbs = require('hbs')
 
 // Express config
@@ -45,31 +45,49 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) =>{
-    const log_object = {
-        forecast: 'Weather forecast',
-        Location: 'Windsor, Ontario, Canada'
+    
+    if (!req.query.address) {
+        res.send({
+            error: "You must provide an address"
+        })
+    } else {
+        console.log(req.query.address)
+        geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+            if (error) {
+                return res.send({error})
+            }
+            forecast(latitude, longitude, (error, forecastData) => {
+                if (error) {
+                    return res.send({error})
+                } else {
+                    return res.send({
+                        location: location,
+                        latitude: latitude,
+                        longitude: longitude,
+                        forecast: forecastData
+                    })
+                }
+            })
+        })
+        
     }
-    // geocode('Windsor, Ontario, Canada', (error, {latitude, longitude, location} = {}) => {
-    //     if(error){
-    //         // log_object.geocode = error
-    //         // console.log(error)
-    //     }else{
-    //         // console.log(latitude)
-    //         log_object.latitude = latitude
-    //         // log_object['geocode']['longitude'] = longitude
-    //         // log_object['geocode']['location'] = location
-    //         forecast(latitude,longitude, (error, response) =>{
-    //             if(error){
-    //                 // log_object.forecast = error
-    //                 // console.log(error)
-    //             } else {
-    //                 // log_object.foreast = response
-    //                 // console.log(response)
-    //             }
-    //         })
-    //     }
-    // })
-    res.send(log_object)
+
+
+})
+
+app.get('/products', (req, res) => {
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term'
+        })
+    }
+
+    console.log(req.query.search)
+    res.send({
+        products: [
+            req.query.search
+        ]
+    })
 })
 
 app.get('/help/*', (req, res) => {
