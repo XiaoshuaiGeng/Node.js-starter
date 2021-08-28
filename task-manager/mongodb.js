@@ -11,10 +11,16 @@ const databaseName = 'task-manager'
 const id = new ObjectID()
 // console.log(id + '\n' + id.toHexString())
 
-MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: true}, (error, client)=> {
+MongoClient.connect(
+    connectionURL, 
+    { useNewUrlParser: true, useUnifiedTopology: true}, 
+    (error, client) => 
+{
     if (error) {
         return console.log('Unable to connect to database!')
     }
+    
+    console.log('Connected correctly!')
 
     const db = client.db(databaseName)
     
